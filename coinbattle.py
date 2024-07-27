@@ -31,7 +31,7 @@ schriftart = pygame.font.SysFont("Arial", 45)
 schriftart_two = pygame.font.SysFont("Arial", 25)
 
 
-def steuerung(x_boddy_one, y_boddy_one, x_boddy_two, y_boddy_two, speed_one_x, speed_one_y, speed_two_x, speed_two_y):
+def steuerung(x_boddy_one, y_boddy_one, x_boddy_two, y_boddy_two):
     keys = pygame.key.get_pressed()  # Steuerung von den Körpern
     if keys[pygame.K_w]:
         y_boddy_one -= speed_one_y
@@ -93,13 +93,13 @@ def kollision(score_one, score_two, x_coin, y_coin, x_boddy_one, y_boddy_one, x_
 
     return score_one, score_two, x_coin, y_coin, x_boddy_one, y_boddy_one, x_boddy_two, y_boddy_two, speed_one_x, speed_one_y, speed_two_x, speed_two_y
 
-def score(score_one):
+def score():
     text_one = schriftart.render(f"Score:{score_one}", True, (weiss))
     screen.blit(text_one, (10, 10))
     text_two = schriftart.render(f"Score:{score_two}", True, (weiss))
     screen.blit(text_two, (600,10))
 
-def check_win(score_one, score_two, speed_one_x, speed_one_y, speed_two_x, speed_two_y, run):
+def check_win(score_one, score_two, speed_one_x, speed_one_y, speed_two_x, speed_two_y):
     keys = pygame.key.get_pressed()  # Steuerung von den Körpern
     if score_one == score_two + 10:
         speed_one_x = 0
@@ -136,7 +136,7 @@ def check_win(score_one, score_two, speed_one_x, speed_one_y, speed_two_x, speed
             score_one = 0
             score_two = 0
 
-    return speed_one_x, speed_one_y, speed_two_x, speed_two_y, run, score_one, score_two
+    return speed_one_x, speed_one_y, speed_two_x, speed_two_y, score_one, score_two
 
 
 
@@ -162,10 +162,10 @@ while run:
     boddy_two = pygame.draw.rect(screen, (rot), (x_boddy_two, y_boddy_two, 50, 50))
     coin = pygame.draw.rect(screen, (gelb), (x_coin, y_coin, 50, 50))
 
-    x_boddy_one, y_boddy_one, x_boddy_two, y_boddy_two = steuerung(x_boddy_one, y_boddy_one, x_boddy_two, y_boddy_two, speed_one_x, speed_one_y, speed_two_x, speed_two_y)
+    x_boddy_one, y_boddy_one, x_boddy_two, y_boddy_two = steuerung(x_boddy_one, y_boddy_one, x_boddy_two, y_boddy_two)
     score_one, score_two, x_coin, y_coin, x_boddy_one, y_boddy_one, x_boddy_two, y_boddy_two, speed_one_x, speed_one_y, speed_two_x, speed_two_y = kollision(score_one, score_two, x_coin, y_coin, x_boddy_one, y_boddy_one, x_boddy_two, y_boddy_two, speed_one_x, speed_one_y, speed_two_x, speed_two_y)
-    score(score_one)
-    speed_one_x, speed_one_y, speed_two_x, speed_two_y, run, score_one, score_two = check_win(score_one, score_two, speed_one_x, speed_one_y, speed_two_x, speed_two_y, run)
+    score()
+    speed_one_x, speed_one_y, speed_two_x, speed_two_y, score_one, score_two = check_win(score_one, score_two, speed_one_x, speed_one_y, speed_two_x, speed_two_y)
 
 
 
